@@ -23,8 +23,7 @@ jobs:
           npm install
       - name: '运行 【简单天气】'
         run: |
-          node Task/node jdtq.js
+          node jdtq.js
         env:
           TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
           TG_USER_ID: ${{ secrets.TG_USER_ID }}
-    
