@@ -1,0 +1,50 @@
+名称：中青看点极速版
+
+上：
+  工作流程调度：
+  日程：
+    -cron：“ 0 0-16,21-23 * * *”
+    -cron：“ 30 0-3 * * *”
+  手表：
+    类型：[开始]
+职位：
+  建造：
+    运行：ubuntu-latest
+    如果：github.event.repository.owner.id == github.event.sender.id
+    脚步：
+      -名称：结帐
+        用途：actions / checkout @ v2
+
+      -名称：“设置Python”
+        用途：actions / setup-python @ v1
+        和：
+          python版本：3.7
+
+      -名称：“安装请求”
+        运行：pip安装请求
+
+      -名称：“ run中青看点极速版”
+        运行：python3 Youth.py
+        ＃目前最大5个账号，可按格式继续填写
+        环境：
+            YOUTH_HEADER1：$ {{secrets.YOUTH_HEADER4}}＃必须账号1 body1
+            YOUTH_READBODY1：$ {{secrets.YOUTH_READBODY4}}＃必须账号1 body1
+            YOUTH_READTIMEBODY1：$ {{secrets.YOUTH_READTIMEBODY4}}＃必须账号1 body1
+            YOUTH_WITHDRAWBODY1：$ {{secrets.YOUTH_WITHDRAWBODY4}}＃非必须账号1提现body1
+            YOUTH_SHAREBODY1：$ {{secrets.YOUTH_SHAREBODY4}}
+            YOUTH_STARTBODY1：$ {{secrets.YOUTH_STARTBODY4}}
+            YOUTH_HEADER2：$ {{secrets.YOUTH_HEADER2}}
+            YOUTH_READBODY2：$ {{secrets.YOUTH_READBODY2}}
+            YOUTH_READTIMEBODY2：$ {{secrets.YOUTH_READTIMEBODY2}}
+            YOUTH_WITHDRAWBODY2：$ {{secrets.YOUTH_WITHDRAWBODY2}}
+            YOUTH_SHAREBODY2：$ {{secrets.YOUTH_SHAREBODY2}}
+            YOUTH_STARTBODY2：$ {{secrets.YOUTH_STARTBODY2}}
+            YOUTH_HEADER3：$ {{secrets.YOUTH_HEADER3}}
+            YOUTH_READBODY3：$ {{secrets.YOUTH_READBODY3}}
+            YOUTH_READTIMEBODY3：$ {{secrets.YOUTH_READTIMEBODY3}}
+            YOUTH_WITHDRAWBODY3：$ {{secrets.YOUTH_WITHDRAWBODY3}}
+            YOUTH_SHAREBODY3：$ {{secrets.YOUTH_SHAREBODY3}}
+            YOUTH_STARTBODY3：$ {{secrets.YOUTH_STARTBODY3}}
+            TG_BOT_TOKEN：$ {{secrets.TG_BOT_TOKEN}}＃非必须tg机器人token
+            TG_USER_ID：$ {{secrets.TG_USER_ID}}＃非必须tg机器人userId
+           
