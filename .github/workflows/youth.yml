@@ -1,46 +1,50 @@
-# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
-# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
-#多帐号YOUTH_HEADER 用#号隔开，其它的用&隔开
-name: youth(中青看点)
+name: 中青看点极速版
 
 on:
   workflow_dispatch:
   schedule:
-     - cron: '0/15 * * * *'
+    - cron: '0 0-16,21-23 * * *'
+    - cron: '30 0-3 * * *'
   watch:
-    types: youth
-
+    types: [started]
 jobs:
   build:
     runs-on: ubuntu-latest
     if: github.event.repository.owner.id == github.event.sender.id
-    env:
-        YOUTH_HEADER: ${{ secrets.YOUTH_HEADER }}
-        YOUTH_ARTBODY: ${{ secrets.YOUTH_ARTBODY }}
-        YOUTH_REDBODY: ${{ secrets.YOUTH_REDBODY }}
-        YOUTH_TIME: ${{ secrets.YOUTH_TIME }}
     steps:
-      - uses: actions/checkout@v1
-      - name: Use Node.js 12.x
-        uses: actions/setup-node@v1
-        with:
-          node-version: 12.x
-      - name: npm install
-        if: env.YOUTH_HEADER
-        run: |
-          npm install
-      - name: '运行 【中青看点】'
-        if: env.YOUTH_HEADER
-        run: |
-          node youth.js
-        env:
-          YOUTH_NOTIFY_CONTROL: ${{ secrets.YOUTH_NOTIFY_CONTROL }}
-          PUSH_KEY: ${{ secrets.PUSH_KEY }}
-          BARK_PUSH: ${{ secrets.BARK_PUSH }}
-          TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
-          TG_USER_ID: ${{ secrets.TG_USER_ID }}
-          BARK_SOUND: ${{ secrets.BARK_SOUND }}
-          DD_BOT_TOKEN: ${{ secrets.DD_BOT_TOKEN }}
-          DD_BOT_SECRET: ${{ secrets.DD_BOT_SECRET }}
+      - name: Checkout
+        uses: actions/checkout@v2
 
-    
+      - name: 'Set up Python'
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.7
+
+      - name: 'Install requests'
+        run: pip install requests
+
+      - name: 'run 中青看点极速版'
+        run: python3 youth.py
+        # 目前最大5个账号，可按格式继续填写
+        env:
+            YOUTH_HEADER1: ${{ secrets.YOUTH_HEADER4 }}  #必须 账号1 body1
+            YOUTH_READBODY1: ${{ secrets.YOUTH_READBODY4 }}  #必须 账号1 body1
+            YOUTH_READTIMEBODY1: ${{ secrets.YOUTH_READTIMEBODY4 }}  #必须 账号1 body1
+            YOUTH_WITHDRAWBODY1: ${{ secrets.YOUTH_WITHDRAWBODY4 }}  #非必须 账号1提现 body1
+            YOUTH_SHAREBODY1: ${{ secrets.YOUTH_SHAREBODY4 }}
+            YOUTH_STARTBODY1: ${{ secrets.YOUTH_STARTBODY4 }}
+            YOUTH_HEADER2: ${{ secrets.YOUTH_HEADER2 }}
+            YOUTH_READBODY2: ${{ secrets.YOUTH_READBODY2 }}
+            YOUTH_READTIMEBODY2: ${{ secrets.YOUTH_READTIMEBODY2 }}
+            YOUTH_WITHDRAWBODY2: ${{ secrets.YOUTH_WITHDRAWBODY2 }}
+            YOUTH_SHAREBODY2: ${{ secrets.YOUTH_SHAREBODY2 }}
+            YOUTH_STARTBODY2: ${{ secrets.YOUTH_STARTBODY2 }}
+            YOUTH_HEADER3: ${{ secrets.YOUTH_HEADER3 }}
+            YOUTH_READBODY3: ${{ secrets.YOUTH_READBODY3 }}
+            YOUTH_READTIMEBODY3: ${{ secrets.YOUTH_READTIMEBODY3 }}
+            YOUTH_WITHDRAWBODY3: ${{ secrets.YOUTH_WITHDRAWBODY3 }}
+            YOUTH_SHAREBODY3: ${{ secrets.YOUTH_SHAREBODY3 }}
+            YOUTH_STARTBODY3: ${{ secrets.YOUTH_STARTBODY3 }}
+            TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}  #非必须 tg机器人token
+            TG_USER_ID: ${{ secrets.TG_USER_ID }}  #非必须 tg机器人userId
+           
